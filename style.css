@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap');
+
+body {
+  font-family: 'PT Sans', sans-serif;
+  background-color: #f5f5f5;
+}
+
+.container {
+  max-width: 992px;
+  margin: auto;
+}
+
+.ttc-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.ttc-val {
+  font-size: 2rem;
+  border: 1px solid;
+  padding: 1em 0;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  min-height: 10vh;
+  background: white;
+}
+.ttc-val:hover {
+  filter: brightness(90%);
+}
