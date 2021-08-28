@@ -30,6 +30,63 @@ const GameBoard = (function () {
   function setState(newState) {
     state = newState;
     pubsub.emit('stateUpdated', state);
+    let winner = checkWinner();
+    let tie = checkTie();
+    if (winner) {
+      pubsub.emit('gameWon', winner);
+      console.log('game won');
+    } else if (tie) {
+      pubsub.emit('gameTied', null);
+      console.log('game tied');
+    }
+  }
+  function checkWinner() {
+    // check rows
+    for (let row of state) {
+      if (row.every(item => item === 'X')) {
+        return 'X';
+      }
+
+      if (row.every(item => item === 'O')) {
+        return 'O';
+      }
+    }
+
+    //check cols
+    for (let r = 0; r < state.length; r++) {
+      let col = state.map(row => row[r]);
+      if (col.every(item => item === 'X')) {
+        return 'X';
+      }
+
+      if (col.every(item => item === 'O')) {
+        return 'O';
+      }
+    }
+
+    // check diagonals
+    let diagOne = [];
+    let diagTwo = [];
+    for (let i = 0; i < state.length; i++) {
+      diagOne.push(state[i][i]);
+      diagTwo.push(state[state.length - 1 - i][i]);
+    }
+    if (diagOne.every(item => item === 'X')) {
+      return 'X'
+    }
+    if (diagOne.every(item => item === 'O')) {
+      return 'O'
+    }
+    if (diagTwo.every(item => item === 'X')) {
+      return 'X';
+    }
+    if (diagTwo.every(item => item === 'O')) {
+      return 'O';
+    }
+    return null;
+  }
+  function checkTie() {
+    return state.flat().every(item => item);
   }
   return {
     getState,
@@ -73,6 +130,26 @@ const Display = (function () {
         ).innerText = state[r][c];
       }
     }
+  }
+
+  function disableDisplay() {
+    const vals = document.querySelectorAll('.ttc-val');
+    vals.forEach(val => {
+      val.classList.add('disable');
+    })
+  }
+
+  pubsub.on('gameWon', showWinner);
+  function showWinner(winner) {
+    const heading = document.querySelector('.ttc-heading');
+    heading.textContent = heading.textContent + ` (Player '${winner}' won!)`;
+    disableDisplay();
+  }
+  pubsub.on('gameTied', showTie);
+  function showTie() {
+    const heading = document.querySelector('.ttc-heading');
+    heading.textContent = heading.textContent + ` (Game tied!)`;
+    disableDisplay();
   }
 
   return {
