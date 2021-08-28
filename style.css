@@ -30,3 +30,27 @@ body {
 .ttc-val:hover {
   filter: brightness(90%);
 }
+
+.ttc-buttons {
+  margin-top: 1rem;
+  display: flex;
+}
+
+.btn {
+  padding: 1em 2em;
+  font-size: inherit;
+  cursor: pointer;
+}
+
+.disable {
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .ttc-buttons {
+    justify-content: center;
+  }
+  .ttc-heading {
+    text-align: center;
+  }
+}
