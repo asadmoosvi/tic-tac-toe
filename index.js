@@ -100,6 +100,10 @@ const Display = (function () {
   const container = template.content.cloneNode(true);
   main.appendChild(container);
   const ttcGrid = document.querySelector('.ttc-grid');
+  const restartBtn = document.getElementById('restart');
+  restartBtn.addEventListener('click', () => {
+    window.location.reload();
+  });
   ttcGrid.innerHTML = ''; // clear grid
   let state = GameBoard.getState();
   for (let r = 0; r < state.length; r++) {
