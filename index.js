@@ -34,10 +34,8 @@ const GameBoard = (function () {
     let tie = checkTie();
     if (winner) {
       pubsub.emit('gameWon', winner);
-      console.log('game won');
     } else if (tie) {
       pubsub.emit('gameTied', null);
-      console.log('game tied');
     }
   }
   function checkWinner() {
